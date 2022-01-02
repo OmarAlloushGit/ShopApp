@@ -1,11 +1,15 @@
 //import 'dart:html';
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:untitled11/bloc/product_bloc.dart';
 import 'package:untitled11/helper/connect_screen.dart';
 import 'package:untitled11/ui/details_screen.dart';
 import 'package:untitled11/ui/profile_screen.dart';
 import 'package:untitled11/ui/search_screen.dart';
+import 'package:http/http.dart' as http;
+
 
 import 'add_product.dart';
 
@@ -46,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
+
+          //Text('categories'),
           Container(
             height: 150,
             child: ListView.builder(
@@ -53,19 +59,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: 4,
                 itemBuilder: (context, index) {
+                 // if(index==0)
+                   // var a='https://cdn3.droom.in/uploads/category/jaguar/20171211103003000000-3659779970629297153.png';
                   return InkWell(
                     onTap: () {
                       c = index;
                       setState(() {});
                     },
                     child: Container(
+
                       margin: EdgeInsets.only(
                           left: 10, right: 10, top: 10, bottom: 10),
                       height: 100,
                       width: 110,
                       color: Colors.grey.withOpacity(0.5),
-                      child: Center(child: Text(index.toString())),
+                      child: Container(child:
+                       Expanded(
+                        child: ClipRRect(
+                         borderRadius:
+                         BorderRadius.circular(10),
+                         child: Image.network(
+                         'https://freesvg.org/img/1550271447.png',
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context)
+                        .size
+                        .width,
+                      ),),),
+
+
                     ),
+                  ),
                   );
                 }),
           ),
@@ -80,7 +103,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         if (snapshot.data?[index]['category_id'] == c) {
                           return GestureDetector(
-                            onTap: () {
+                            onTap: () async {
+                              var uri = Uri.http('cryptic-crag-48403.herokuapp.com' ,'/api/products/'+ snapshot.data![index]['product_id'].toString());
+                              final response = await http.get(uri);
+                              print (response.body);
+                              if(response.statusCode == 200 ||response.statusCode == 201 ) {
+                                final result = jsonDecode(response.body);
+                                print("==================="+result['The product']['product_id'].toString());
+
+                                linkingScreen.goToNextScreen(
+                                    context,
+                                    DetailsScreen(
+                                      result['The product']['product_id']??0,
+                                      result['The product']['name']??'mm',
+                                      result['The product']['quantity']??0,
+                                      result['The product']['image']??'nn',
+                                      result['The product']['exp_date']??'nn',
+                                      result['The product']['description']??'nnnn',
+                                      result['The product']['price']?? 0,
+                                      result['Views']??0,
+                                      result['The product']['user_id']??0,
+                                      result['The product']['category_id']??1,
+                                      result['The product']['created_at']??'nn',
+                                      result['The product']['updated_at']??'nn',
+                                      result['Likes']??0,
+                                      result['Comments']??0,
+                                      result['The product']['current_price'].toString()??'nn',
+                                    ));
+
+
+                              } else {
+                                throw Exception("Failed to load products!");
+                              }
+/*
                               linkingScreen.goToNextScreen(
                                   context,
                                   DetailsScreen(
@@ -97,6 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     snapshot.data?[index]['created_at']??'',
                                     snapshot.data?[index]['updated_at']??'',
                                   ));
+
+ */
                             },
                             child: Container(
                               margin:

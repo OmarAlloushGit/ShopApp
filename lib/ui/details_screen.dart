@@ -13,6 +13,9 @@ class DetailsScreen extends StatefulWidget {
   int category;
   String createdAt;
   String updatedAt;
+  int Likes , comment ;
+  String currentPrice;
+
 
   DetailsScreen(
       this.productId,
@@ -26,7 +29,12 @@ class DetailsScreen extends StatefulWidget {
       this.userId,
       this.category,
       this.createdAt,
-      this.updatedAt);
+      this.updatedAt,
+      this.Likes,
+      this.comment,
+     this.currentPrice,
+
+      );
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -43,8 +51,22 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       body: ListView(
         children: [
-          Text(widget.name),
-          Text(widget.category.toString())
+          Text(widget.imageUrl.toString()),
+          Text(widget.productId.toString()),
+          Text(widget.name.toString()),
+          Text(widget.quantity.toString()),
+          Text(widget.category.toString()),
+          Text(widget.expDate.toString()),
+          Text(widget.updatedAt.toString()),
+          Text(widget.createdAt.toString()),
+          Text("Price "+widget.price.toString()),
+          Text(widget.description.toString()),
+          Text("Number of Views: "+widget.views.toString()),
+          Text("User ID: " +widget.userId.toString()),
+          Text("Number of Likes: " +widget.Likes.toString()),
+          Text("Number of Comments: "+ widget.comment.toString()),
+         Text("Current Price: "+widget.currentPrice.toString()),
+
         ],
       ),
     );

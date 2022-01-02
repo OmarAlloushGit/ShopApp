@@ -84,6 +84,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         customTextFiled.passwordController.text)
                                     .then((value) {
                                       try{
+                                      //  var res = jsonDecode(value!.body.split('\n')[1]);
+                                        //print("name: "+ res['name']);
+
+                                        //var name = res['access_token'];
+
+                                        //print(name);
+
                                         token='${value?.body.split("access_token\":")[1].split('}')[0].toString()}';
 
                                       }catch(e){

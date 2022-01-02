@@ -26,7 +26,7 @@ class TextValidation {
 
   String? validatePassword(String value) {
     if (value.length < 6) {
-      return 'Password must be at least 8 characters';
+      return 'Password must be at least 6 characters';
     } else {
       return null;
     }

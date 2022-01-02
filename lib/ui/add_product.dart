@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:untitled11/apis/apis.dart';
 
@@ -28,6 +29,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
   var addQuantityController = TextEditingController();
 
   var addPriceController = TextEditingController();
+
+  var discount1Controller = TextEditingController();
+
+  var date1Controller = TextEditingController();
+
+  var discount2Controller = TextEditingController();
+
+  var date2Controller = TextEditingController();
+
+  var discount3Controller = TextEditingController();
+
+  var data3Controller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -135,21 +149,112 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(
+                height: 14,
+              ),
+              TextFormField(
+                controller: discount1Controller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'Dicount 1',
+                  prefixIcon: Icon(
+                    Icons.money,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              TextFormField(
+                controller: date1Controller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'Data 1',
+                  prefixIcon: Icon(
+                    Icons.money,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              TextFormField(
+                controller: discount2Controller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'Dicount 2',
+                  prefixIcon: Icon(
+                    Icons.money,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              TextFormField(
+                controller: date2Controller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'Data 2',
+                  prefixIcon: Icon(
+                    Icons.money,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              TextFormField(
+                controller: discount3Controller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'Dicount 3',
+                  prefixIcon: Icon(
+                    Icons.money,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              TextFormField(
+                controller: data3Controller,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText: 'Data 3',
+                  prefixIcon: Icon(
+                    Icons.money,
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
               TextButton(onPressed: () {
+                var discount = [discount1Controller.text.toString() , discount1Controller.text.toString()];
+                var date = [date1Controller.text.toString() , date1Controller.text.toString()];
+
+
 
                 print(widget.token.split("\"")[1]);
                 apiProvider.addProductApi(
-                    addNameController.text, Image.file(File(file!.path)).toString(),
+                    addNameController.text,  file!.path,
                     addDateController.text,
                     addCategoriesController.text,
                     addQuantityController.text,
-                    addPriceController.text,widget.token.split("\"")[1]);
+                    addPriceController.text,
+                    widget.token.split("\"")[1],
+                    discount, date
+                );
               }, child: Text('Send')),
               TextButton(onPressed: () async{
                 file= await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-               file?.readAsBytes().then((value) {
-                 print(value);
-               });
+                file?.readAsBytes().then((value) {
+                  print(value);
+                });
               }, child: Text('pick')),
             ],
           ),
